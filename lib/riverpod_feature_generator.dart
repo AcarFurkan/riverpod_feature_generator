@@ -1,4 +1,4 @@
-library generators;
+library riverpod_feature_generator;
 
 import 'package:build/build.dart';
 import 'package:riverpod_feature_generator/src/widget_generator.dart';

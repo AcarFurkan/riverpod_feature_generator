@@ -1,39 +1,40 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+Flutter Widget Code Generator
+This package provides a code generator for Flutter widgets, making it easier and quicker to create widget code with specified parameters.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+Features
+Generates Flutter widget code based on provided parameters.
+Supports customization options to tailor the generated widget code.
+Streamlines the process of creating widgets for Flutter applications.
+Provides flexibility for generating various widget types and layouts.
+Getting Started
+To use this package, you'll need:
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Flutter SDK installed on your machine.
+Installation
+Add the following to your pubspec.yaml file:
 
-## Features
+yaml
+Copy code
+dependencies:
+  flutter_widget_code_generator: ^1.0.0  # Use the latest version
+Run flutter pub get to install the package.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Usage
+To generate Flutter widget code, use the provided functions. Here's a simple example:
 
-## Getting started
+dart
+Copy code
+import 'package:flutter_widget_code_generator/flutter_widget_code_generator.dart';
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+void main() {
+  final generatedCode = generateWidgetCode('MyWidget', ['Text("Hello, World!")']);
+  print(generatedCode);
+}
+For more comprehensive examples, refer to the /example folder.
 
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+Additional Information
+Documentation: Detailed usage and API documentation can be found here.
+Contributing: We welcome contributions! See CONTRIBUTING.md for more details.
+Issues: If you encounter any issues, please file an issue on GitHub.
+License: This package is released under the MIT License.f
