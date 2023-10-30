@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      generators|annotations:
+        enabled: true
+
+builders:
+  generators:
+    target: ":riverpod_feature_generator"
+    import: "package:riverpod_feature_generator/riverpod_feature_generator.dart"
+    builder_factories: ["generateWidgetGenClass"] #Builder name(BuilderOptions)
+    build_extensions: { ".dart": [".g.dart"] }
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

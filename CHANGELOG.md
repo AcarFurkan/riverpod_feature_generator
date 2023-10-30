@@ -1,3 +1,7 @@
+## 0.0.11
+
+Error generator added
+
 ## 0.0.4
 
 ## 0.0.3

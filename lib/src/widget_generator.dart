@@ -3,12 +3,12 @@
 import 'dart:developer';
 
 import 'package:analyzer/dart/element/element.dart';
- import 'package:build/src/builder/build_step.dart';
+import 'package:build/src/builder/build_step.dart';
 import 'package:riverpod_feature_generator/src/model_visitor.dart';
- import 'package:source_gen/source_gen.dart';
-  import 'package:widget_gen_annotation/widget_gen_annotation.dart';
+import 'package:riverpod_widget_annotation/riverpod_widget_annotation.dart';
+import 'package:source_gen/source_gen.dart';
 
-class WidgetGenerator extends GeneratorForAnnotation<WidgetGenAnnotation> {
+class WidgetGenerator extends GeneratorForAnnotation<RiverpodWidgetAnnotation> {
   bool _checkAsync(Element element, ConstantReader annotation) {
     try {
       return annotation.read('isAsync').boolValue;
@@ -61,7 +61,6 @@ class WidgetGenerator extends GeneratorForAnnotation<WidgetGenAnnotation> {
       state = "AsyncValue<$state?>";
     }
 
-    // return "//$convertedString ";
     buffer.writeln('abstract class ${className}Base extends ConsumerWidget{');
     buffer.writeln(' const ${className}Base({Key? key}) : super(key: key);');
 
@@ -87,11 +86,48 @@ class WidgetGenerator extends GeneratorForAnnotation<WidgetGenAnnotation> {
     } else {
       buffer.writeln('     return builder(context, controller, state,ref);');
     }
-
-    // buffer.writeln(
-    //    '     return builder(context, ref.read(provider.notifier), ref.watch(provider));');
     buffer.writeln('  }');
     buffer.writeln('}');
+
+    ///Generate SubClass For Sub Widgets
+    if (isAsync) {
+      buffer.writeln(
+          'abstract class ${className}SubBase extends ConsumerWidget{');
+      buffer
+          .writeln(' const ${className}SubBase({Key? key}) : super(key: key);');
+
+      buffer.writeln(
+          'Widget builder(BuildContext context,$controller controller,$state state,WidgetRef ref);');
+      buffer.writeln('get provider => $provider;');
+
+      buffer.writeln('  @override');
+      buffer.writeln('  Widget build(BuildContext context, WidgetRef ref) {');
+      buffer.writeln('final state = ref.watch($provider);');
+      buffer.writeln('final controller = ref.read($provider.notifier);');
+      buffer.writeln('     return builder(context, controller, state,ref);');
+      buffer.writeln('  }');
+      buffer.writeln('}');
+    }
+
+    if (showError) {
+      buffer.writeln('''extension AsyncValueUI on AsyncValue {
+  void showScaffoldErrorMessage(BuildContext context, String text) {
+    if (hasError) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(text),
+              backgroundColor: Colors.red,
+            ),
+          );
+        },
+      );
+    }
+  }
+}''');
+    }
     return buffer.toString();
   }
 }
