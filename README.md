@@ -1,40 +1,17 @@
 
-Flutter Widget Code Generator
-This package provides a code generator for Flutter widgets, making it easier and quicker to create widget code with specified parameters.
+#Riverpod Feature Generator
 
-Features
-Generates Flutter widget code based on provided parameters.
-Supports customization options to tailor the generated widget code.
-Streamlines the process of creating widgets for Flutter applications.
-Provides flexibility for generating various widget types and layouts.
-Getting Started
-To use this package, you'll need:
+1. Now, there is no longer a need to write ref.read(provider.notifier) or ref.watch(provider) every time.
+2. If you deviate from the naming conventions, you’ll get a compile error, which ensures you stick to a defined structure.
 
-Flutter SDK installed on your machine.
-Installation
-Add the following to your pubspec.yaml file:
+3. It handles error messages for you.
 
-yaml
-Copy code
-dependencies:
-  flutter_widget_code_generator: ^1.0.0  # Use the latest version
-Run flutter pub get to install the package.
+4. It manages loadings for you.
 
-Usage
-To generate Flutter widget code, use the provided functions. Here's a simple example:
+5. Because it is much simpler, it increases the readability of the code base.
 
-dart
-Copy code
-import 'package:flutter_widget_code_generator/flutter_widget_code_generator.dart';
+##Compare
+Normal implementation
 
-void main() {
-  final generatedCode = generateWidgetCode('MyWidget', ['Text("Hello, World!")']);
-  print(generatedCode);
-}
-For more comprehensive examples, refer to the /example folder.
+Implementation with generator
 
-Additional Information
-Documentation: Detailed usage and API documentation can be found here.
-Contributing: We welcome contributions! See CONTRIBUTING.md for more details.
-Issues: If you encounter any issues, please file an issue on GitHub.
-License: This package is released under the MIT License.f
