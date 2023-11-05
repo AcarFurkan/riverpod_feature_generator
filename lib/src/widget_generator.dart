@@ -73,12 +73,12 @@ class WidgetGenerator extends GeneratorForAnnotation<RiverpodWidgetAnnotation> {
     buffer.writeln('  Widget build(BuildContext context, WidgetRef ref) {');
     buffer.writeln('final state = ref.watch($provider);');
     buffer.writeln('final controller = ref.read($provider.notifier);');
-    if (showError) {
+    if (showError && isAsync) {
       buffer.writeln(
           '    state.showScaffoldErrorMessage(context, state.error.toString());');
     }
 
-    if (isAddLoading) {
+    if (isAddLoading && isAsync) {
       buffer.writeln('  return Stack(children: [');
       buffer.writeln('     builder(context, controller, state,ref),');
       buffer.writeln(
@@ -90,7 +90,7 @@ class WidgetGenerator extends GeneratorForAnnotation<RiverpodWidgetAnnotation> {
     buffer.writeln('}');
 
     ///Generate SubClass For Sub Widgets
-    if (isAsync) {
+    if (isAsync && (isAddLoading || showError)) {
       buffer.writeln(
           'abstract class ${className}SubBase extends ConsumerWidget{');
       buffer
@@ -109,7 +109,7 @@ class WidgetGenerator extends GeneratorForAnnotation<RiverpodWidgetAnnotation> {
       buffer.writeln('}');
     }
 
-    if (showError) {
+    if (isAsync && showError) {
       buffer.writeln('''extension AsyncValueUI on AsyncValue {
   void showScaffoldErrorMessage(BuildContext context, String text) {
     if (hasError) {
