@@ -1,3 +1,6 @@
+## 0.0.12
+
+Documentation updated
 ## 0.0.11
 
 Error generator added
